@@ -96,6 +96,8 @@ sgdState = sgdState or {
 function train(model, dataset, iter)
   collectgarbage();
 
+  model:training()
+
   local shuffle = torch.randperm(dataset.size)
 
   for t = 1, dataset.size, opt.batchsize do
