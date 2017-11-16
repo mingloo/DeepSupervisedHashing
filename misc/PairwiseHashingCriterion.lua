@@ -27,7 +27,8 @@ function PairwiseHashingCriterion:updateOutput(input,target)
 
   -- compute self.Li
   local part_1=0.5*torch.cmul(1-y,(b1-b2):norm(2,2):pow(2))
-  local part_2=torch.max(torch.cat(self.margin-(b1-b2):norm(2,2):pow(2),torch.Tensor(N):zero():type(torch.type(b1)),2),2) 
+  local temp=torch.max(torch.cat(self.margin-(b1-b2):norm(2,2):pow(2),torch.Tensor(N):zero():type(torch.type(b1)),2),2)
+  local part_2=0.5*torch.cmul(y, temp)
   local part_3=self.alpha*((torch.abs(b1)-1):norm(1,2)+(torch.abs(b2)-1):norm(1,2))
 
   self.Li=part_1+part_2+part_3
